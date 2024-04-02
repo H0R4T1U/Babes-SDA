@@ -33,7 +33,8 @@ class DO {
 	//cauta o cheie si returneaza valoarea asociata (daca dictionarul contine cheia) sau null: NULL_TVALOARE
 	TValoare cauta(TCheie c) const;
 
-
+	void mareste();
+	void sort();
 	//sterge o cheie si returneaza valoarea asociata (daca exista) sau null: NULL_TVALOARE
 	TValoare sterge(TCheie c);
 

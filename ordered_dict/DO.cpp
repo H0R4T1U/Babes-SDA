@@ -8,8 +8,8 @@ using namespace std;
 DO::DO(Relatie r) {
 	/* de adaugat */
 	DIM = 0;
-	ALLOCATED = 0;
-	elemente = new TElem[dim];
+	ALLOCATED = 1;
+	elemente = new TElem[DIM];
 	rel = r;
 
 }
@@ -17,23 +17,46 @@ DO::DO(Relatie r) {
 //adauga o pereche (cheie, valoare) in dictionar
 //daca exista deja cheia in dictionar, inlocuieste valoarea asociata cheii si returneaza vechea valoare
 //daca nu exista cheia, adauga perechea si returneaza null
+void DO::mareste() {
+	TElem* v_nou = new TElem[2* ALLOCATED];
+	for(int i =0 ; i< DIM; i++) {
+		v_nou[i] = elemente[i];
+	}
+	ALLOCATED = 2*ALLOCATED;
+	delete[] elemente;
+	elemente = v_nou;
+}
+void DO::sort() {
+	for (int k = 0; k< this->DIM;k++) {
+		for(int i = 0; i<this->DIM-1;i++) {
+			if(!rel(this->elemente[i].first,this->elemente[i+1].first)) {
+				TElem tmp = this->elemente[i];
+				this->elemente[i] = this->elemente[i+1];
+				this->elemente[i+1] = tmp;
+			}
+		}
+	}
+}
+
 TValoare DO::adauga(TCheie c, TValoare v) {
 	/* de adaugat */
 	for(int i =0 ; i < this->DIM;i++) {
 		if(this->elemente[i].first == c) {
+			TValoare val_veche = this->elemente[i].second;
 			this->elemente[i].second = v;
+			return val_veche;
 		}
 	}
-	TElem* v_nou = new TElem[ALLOCATED+1];
-	for(int i = 0; i < this->DIM;i++) {
-		v_nou[i] = this->elemente[i];
+
+	if(DIM == ALLOCATED) {
+		mareste();
 	}
-	v_nou[this->DIM].first = c;
-	v_nou[this->DIM].second = v;
-	delete[] elemente;
-	this->elemente = v_nou;
-	this->ALLOCATED +=1;
+
+
+	elemente[this->DIM].first = c;
+	elemente[this->DIM].second = v;
 	this->DIM +=1;
+	sort();
 	return NULL_TVALOARE;
 }
 
@@ -58,6 +81,7 @@ TValoare DO::sterge(TCheie c) {
 			for(int j = i; j < this->DIM-1;j++) {
 				this->elemente[j] = this->elemente[j+1];
 			}
+			DIM -= 1;
 			break;
 		}
 	}
@@ -83,4 +107,5 @@ Iterator DO::iterator() const {
 
 DO::~DO() {
 	/* de adaugat */
+	delete[] elemente;
 }

@@ -13,6 +13,7 @@ private:
 	const DO& dict;
 
 	/* aici e reprezentarea specifica a iteratorului */
+	int currentIndex;
 
 
 public:
