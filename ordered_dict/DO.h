@@ -52,4 +52,5 @@ class DO {
 	// destructorul dictionarului
 	~DO();
 
+    DO perechi_interval(TCheie a, TCheie b) const;
 };
