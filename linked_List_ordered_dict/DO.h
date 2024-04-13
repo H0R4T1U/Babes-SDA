@@ -19,16 +19,14 @@ class Nod
 public:
     friend class DO;
     //constructor
-    Nod(TElem e, PNod urm,PNod pre);
+    Nod(TElem e, PNod urm);
     TElem element();
     PNod urmator();
-    PNod precedent();
 
 private:
 
     TElem e;
     PNod urm;
-    PNod pre;
 };
 
 typedef bool(*Relatie)(TCheie, TCheie);

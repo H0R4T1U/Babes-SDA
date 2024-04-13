@@ -8,10 +8,10 @@ using namespace std;
 class Nod;
 
 /// Teta(1)
-Nod::Nod(TElem e, PNod urm, PNod pre) {
+Nod::Nod(TElem e, PNod urm) {
     this->e = e;
     this->urm = urm;
-    this->pre = pre;
+
 }
 /// Teta(1)
 TElem Nod::element() {
@@ -21,10 +21,7 @@ TElem Nod::element() {
 PNod  Nod::urmator(){
     return urm;
 }
-/// Teta(1)
-PNod Nod::precedent() {
-    return this->pre;
-}
+
 /// Teta(1)
 DO::DO(Relatie r) {
     /* de adaugat */
@@ -61,7 +58,7 @@ TValoare DO::adauga(TCheie c, TValoare v) {
     TElem e;
     e.first = c;
     e.second = v;
-    PNod Newp = new Nod(e,nullptr,nullptr);
+    PNod Newp = new Nod(e,nullptr);
     if(this->Inceput == nullptr){
         this->Inceput = Newp;
         this->len = 1;
@@ -82,11 +79,12 @@ TValoare DO::adauga(TCheie c, TValoare v) {
         return aux;
     }
     if(p->urm != nullptr){
-        p->urm->pre = Newp;
+
         Newp->urm = p->urm;
+        p->urm = Newp;
     }
     p->urm = Newp;
-    Newp->pre = p;
+
     this->len++;
     sort();
 	return NULL_TVALOARE;
@@ -122,19 +120,17 @@ TValoare DO::sterge(TCheie c) {
         PNod p_aux = this->Inceput;
         TValoare aux = p->e.second;
         this->Inceput = p->urm;
-        if(this->Inceput != nullptr)
-            this->Inceput->pre = nullptr;
+
         delete p_aux;
         this->len--;
         return aux;
     }
     while(p->urmator() != nullptr){
-        if(c==p->element().first){
-            PNod p_aux = p;
-            TValoare aux = p->e.second;
-            p = p->pre;
-            if(p->urm->urm != nullptr)
-                p->urm->urm->pre =p;
+        if(c==p->urm->element().first){
+            PNod p_aux = p->urm;
+            TValoare aux = p->urm->e.second;
+
+
             p->urm = p->urm->urm;
             delete p_aux;
             this->len--;
@@ -145,7 +141,7 @@ TValoare DO::sterge(TCheie c) {
     if(c == p->element().first){
         PNod p_aux = p;
         TValoare  aux = p->e.second;
-        p->pre->urm = nullptr;
+
         p = nullptr;
         this->len--;
         delete p_aux;
