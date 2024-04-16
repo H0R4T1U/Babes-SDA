@@ -29,26 +29,6 @@ DO::DO(Relatie r) {
     this->r = r;
     this->len = 0;
 }
-/// Teta(n^2)
-void DO::sort() {
-    for (int k = 0; k< this->len;k++) {
-        PNod  p = this->Inceput;
-        for(int i = 0; i<this->len-1;i++) {
-            if(!r(p->element().first,p->urm->element().first )) {
-                TElem el = p->element();
-                p->e = p->urm->element();
-                p->urm->e = el;
-                //p->pre->urm = p->urm;
-                //p->urm->pre = p->pre;
-                //p->pre = p->urm;
-                //p->urm = p->pre->urm;
-                //p->pre->urm = p;
-                //p->urm->pre = p;
-            }
-            p = p->urmator();
-        }
-    }
-}
 //adauga o pereche (cheie, valoare) in dictionar
 //daca exista deja cheia in dictionar, inlocuieste valoarea asociata cheii si returneaza vechea valoare
 //daca nu exista cheia, adauga perechea si returneaza null
