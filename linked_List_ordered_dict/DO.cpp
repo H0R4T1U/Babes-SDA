@@ -52,7 +52,9 @@ void DO::sort() {
 //adauga o pereche (cheie, valoare) in dictionar
 //daca exista deja cheia in dictionar, inlocuieste valoarea asociata cheii si returneaza vechea valoare
 //daca nu exista cheia, adauga perechea si returneaza null
-// TETA(N^2)
+// Caz favorabil, ( lista inlantuite este goala sau are un singur element) O(1)
+// Caz defavorabil O(N)
+// Caz Mediu O(N)
 TValoare DO::adauga(TCheie c, TValoare v) {
 	/* de adaugat */
     TElem e;
@@ -64,12 +66,25 @@ TValoare DO::adauga(TCheie c, TValoare v) {
         this->len = 1;
         return NULL_TVALOARE;
     }
+
     PNod  p = this->Inceput;
+    if(!this->r(p->element().first,c)){
+        Newp->urm = this->Inceput;
+        this->Inceput = Newp;
+        this->len++;
+        return NULL_TVALOARE;
+    }
     while(p->urmator() != nullptr){
         if(c == p->element().first){
             TValoare aux = p->e.second;
             p->e.second = v;
             return aux;
+        }
+        if(!this->r(p->urmator()->element().first,c )){
+            Newp->urm = p->urmator();
+            p->urm = Newp;
+            this->len++;
+            return NULL_TVALOARE;
         }
         p = p->urmator();
     }
@@ -86,7 +101,6 @@ TValoare DO::adauga(TCheie c, TValoare v) {
     p->urm = Newp;
 
     this->len++;
-    sort();
 	return NULL_TVALOARE;
 }
 
