@@ -1,0 +1,29 @@
+subalgoritm Actualizeaza_dict(DO &dict)
+	actualizate <- 0
+	cat_timp dict->urmatoru != null executa
+		p<- this->Inceput;
+		cat_timp p->urmatoru != null executa
+			daca cheie(p) == cheie(d)
+				valoare(p) = valoare(d)
+				d <- urmator(d)
+				actualizate <- actualizate + 1
+			p<- urmator(p)
+		daca p->urmatoru == null si cheie(p) == cheie(d)
+			valoare(p) = valoare(d)
+			d <- urmator(d)
+			actualizate <- actualizate +1
+	
+		d<- urmator(d)
+	
+	if urmator(d) == null
+		p<-this->inceput
+		cat_timp urmator(p) != null executa
+			if cheie(p) == cheie(d)
+				valoare(p) = valoare(d)
+				actualizate += 1
+				return actualizate
+			p <- urmator(p)
+		daca urmator(p) == null si cheie(p) == cheie(d) executa
+			element(p) = element(d)
+			actualizate += 1
+	return actualizate
