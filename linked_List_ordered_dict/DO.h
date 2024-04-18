@@ -42,7 +42,6 @@ class DO {
 
 	// constructorul implicit al dictionarului
 	DO(Relatie r);
-    void sort();
 
 	// adauga o pereche (cheie, valoare) in dictionar
 	//daca exista deja cheia in dictionar, inlocuieste valoarea asociata cheii si returneaza vechea valoare
@@ -61,7 +60,7 @@ class DO {
 
 	//verifica daca dictionarul e vid
 	bool vid() const;
-
+    int actualizeazaDict(DO &dict) const;
 	// se returneaza iterator pe dictionar
 	// iteratorul va returna perechile in ordine dupa relatia de ordine (pe cheie)
 	Iterator iterator() const;

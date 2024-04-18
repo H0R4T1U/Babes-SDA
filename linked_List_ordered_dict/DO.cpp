@@ -73,11 +73,7 @@ TValoare DO::adauga(TCheie c, TValoare v) {
         p->e.second = v;
         return aux;
     }
-    if(p->urm != nullptr){
 
-        Newp->urm = p->urm;
-        p->urm = Newp;
-    }
     p->urm = Newp;
 
     this->len++;
@@ -169,4 +165,56 @@ DO::~DO() {
         this->Inceput = this->Inceput->urm;
         delete p;
     }
+}
+// Actualizeaza valorile cheilor comune cu cele din dict
+// Complexitate O(m*n)
+int DO::actualizeazaDict(DO &dict) const {
+    PNod d = dict.Inceput;
+    int actualizate =0;
+    while(d->urm != nullptr){
+        PNod p = this->Inceput;
+        while(p->urm != nullptr){
+            if(p->element().first == d->element().first ){
+                TElem a;
+                a.first = d->element().first;
+                a.second = d->element().second;
+                p->e = a;
+                d = d->urmator();
+                actualizate +=1;
+
+            }
+            p = p->urmator();
+        }
+        if(p->urm == nullptr &&  p->element().first == d->element().first){
+            TElem a;
+            a.first = d->element().first;
+            a.second = d->element().second;
+            p->e = a;
+            d = d->urmator();
+            actualizate +=1;
+        }
+        d = d->urmator();
+    }
+    if(d->urm == nullptr){
+        PNod p = this->Inceput;
+        while(p->urm != nullptr){
+            if(p->element().first == d->element().first ){
+                TElem a;
+                a.first = d->element().first;
+                a.second = d->element().second;
+                p->e = a;
+                actualizate +=1;
+                return actualizate;
+            }
+            p = p->urmator();
+        }
+        if(p->urm == nullptr &&  p->element().first == d->element().first){
+            TElem a;
+            a.first = d->element().first;
+            a.second = d->element().second;
+            p->e = a;
+            actualizate +=1;
+        }
+    }
+    return actualizate;
 }
